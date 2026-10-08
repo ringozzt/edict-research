@@ -174,5 +174,9 @@ mindmap
 
 交互版：[mindmap.html](./mindmap.html)
 
+## 跨项目对比
+
+- [Edict × Paperclip：同一赛道的两种解法](./comparison-with-paperclip.md) —— 管人 vs 管事，编制 vs 流程
+
 ---
 *原始仓库：https://github.com/cft0808/edict · 架构文档：https://github.com/cft0808/edict/blob/main/docs/task-dispatch-architecture.md*

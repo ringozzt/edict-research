@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三省六部 · Edict 思维导图</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f7f7f5; color: #333; margin: 0; padding: 24px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: #888; font-size: 13px; margin-bottom: 18px; }
+  .sub a { color: #4a90d9; }
+  .tree, .tree ul { list-style: none; margin: 0; padding-left: 22px; }
+  .tree { padding-left: 0; }
+  .node { margin: 3px 0; }
+  .label { cursor: pointer; display: inline-block; padding: 4px 12px; border-radius: 8px; background: #fff; border: 1px solid #e0e0e0; font-size: 14px; }
+  .label:hover { border-color: #b8860b; }
+  .label.root { background: #7a1f1f; color: #fff; border-color: #7a1f1f; font-weight: bold; }
+  .label.l1 { background: #fdf3e3; border-color: #e8c97a; font-weight: bold; }
+  .toggle { display: inline-block; width: 18px; color: #999; font-size: 12px; user-select: none; }
+  .children.collapsed { display: none; }
+  .btns { margin-bottom: 14px; }
+  .btns button { font-size: 12px; padding: 4px 12px; margin-right: 8px; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; }
+  .hint { font-size: 12px; color: #aaa; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+<h1>⚔️ 三省六部 · Edict</h1>
+<div class="sub">原始仓库：<a href="https://github.com/cft0808/edict">github.com/cft0808/edict</a> · 调研日期 2026-10-08 · 点击节点可折叠</div>
+<div class="btns"><button onclick="expandAll()">全部展开</button><button onclick="collapseAll()">全部折叠</button></div>
+<div class="hint">数据：16,977 star / 1,766 fork（2026-10-08 实测）· MIT · Python 3.9+（后端仅标准库）+ React 18 看板</div>
+<ul class="tree" id="tree"></ul>
+<script>
+const data = ["三省六部 · Edict", [
+  ["仓库", [
+    ["cft0808/edict，MIT，作者微信号 CFT0808"],
+    ["16,977 star / 1,766 fork；2026-02-23 创建，9-28 仍在推送"],
+    ["底座 OpenClaw；无 OpenClaw 可 Docker 一键跑 Demo"],
+    ["中/英/日三语 README"],
+  ]],
+  ["流转：圣旨的一生", [
+    ["皇上（你）下旨：飞书/企微发消息"],
+    ["太子分拣：闲聊自己回，旨意转交中书"],
+    ["中书省规划：拆解子任务、设计方案"],
+    ["门下省审议：四维审查，不合格封驳打回"],
+    ["尚书省派发：调度六部并行执行"],
+    ["六部执行 → 尚书汇总 → 回奏皇上"],
+  ]],
+  ["十二官员", [
+    ["太子：分拣官，闲聊识别/旨意提炼"],
+    ["中书省：规划，需求理解/任务分解"],
+    ["门下省：审核，质量评审/风险识别"],
+    ["尚书省：派发，任务调度/进度跟踪"],
+    ["户部：数据资源核算"],
+    ["礼部：文档规范报告"],
+    ["兵部：代码算法巡检"],
+    ["刑部：安全合规审计"],
+    ["工部：CI/CD 部署工具"],
+    ["吏部：Agent 注册与权限"],
+    ["钦天监：数据分析/性能度量/趋势预测"],
+    ["早朝官：每日简报（独立）"],
+  ]],
+  ["杀手锏：门下省封驳", [
+    ["架构的一部分，不是可选插件；每旨必审"],
+    ["四维：可行性 / 完整性 / 风险 / 资源"],
+    ["结论只有准奏或封驳；强制返工直到达标"],
+    ["审核前置：审方案而非事后审产出"],
+  ]],
+  ["权限矩阵", [
+    ["agents.json allowAgents 白名单"],
+    ["太子只能调中书省，不可越级"],
+    ["六部只能回奏尚书省，不可横向串联"],
+    ["早朝官谁也不能调（独立观察者）"],
+    ["组织架构用代码强制执行"],
+  ]],
+  ["状态机", [
+    ["9 状态：Pending→Taizi→Zhongshu→Menxia→Assigned→Doing/Next→Review→Done/Cancelled"],
+    ["严格递进，不可越级；封驳打回重走"],
+  ]],
+  ["军机处看板", [
+    ["React 18 实时 Kanban，任务按状态列展示"],
+    ["叫停 / 取消 / 恢复（实时可干预）"],
+    ["奏折阁：五阶段时间线归档，一键复制 Markdown"],
+    ["官员总览：Token 消耗排行榜"],
+    ["每个 Agent 独立热切换 LLM"],
+    ["旨库：9 个圣旨模板一键下旨"],
+  ]],
+  ["框架对照", [
+    ["比 CrewAI 多一层制度性审核"],
+    ["比 AutoGen 多一个实时看板"],
+    ["官方三词：制度性审核 + 完全可观测 + 实时可干预"],
+  ]],
+  ["设计模式", [
+    ["制度补智能：不可靠个体 → 可靠系统"],
+    ["审核前置：CI 门禁而非上线后复盘"],
+    ["权限即架构：白名单写死指挥链"],
+    ["可观测是干预的前提"],
+  ]],
+  ["出圈", [
+    ["2026-03 华人程序员圈走红（当时 6.5K star）"],
+    ["盒饭财经/观察者网报道'赛博朝廷'"],
+    ["网友：cosplay 皇帝、锦衣卫 monitoring agent"],
+  ]],
+]];
+function build(nodes, depth) {
+  const ul = document.createElement("ul");
+  if (depth > 0) ul.className = "children";
+  nodes.forEach(n => {
+    const li = document.createElement("li");
+    li.className = "node";
+    const hasKids = Array.isArray(n[1]);
+    const label = document.createElement("span");
+    label.className = "label" + (depth === 0 ? " root" : depth === 1 ? " l1" : "");
+    label.innerHTML = (hasKids ? '<span class="toggle">▾</span>' : '<span class="toggle">·</span>') + n[0];
+    li.appendChild(label);
+    if (hasKids) {
+      const childUl = build(n[1], depth + 1);
+      li.appendChild(childUl);
+      label.onclick = () => {
+        childUl.classList.toggle("collapsed");
+        label.querySelector(".toggle").textContent = childUl.classList.contains("collapsed") ? "▸" : "▾";
+      };
+    }
+    ul.appendChild(li);
+  });
+  return ul;
+}
+document.getElementById("tree").appendChild(build(data, 0));
+function expandAll() { document.querySelectorAll(".children").forEach(e => e.classList.remove("collapsed")); document.querySelectorAll(".toggle").forEach(t => t.textContent = "▾"); }
+function collapseAll() { document.querySelectorAll("ul.children").forEach(e => e.classList.add("collapsed")); document.querySelectorAll("ul.children").forEach(e => { const t = e.parentElement.querySelector(":scope > .label .toggle"); if (t) t.textContent = "▸"; }); }
+</script>
+</body>
+</html>
